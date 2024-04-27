@@ -1,0 +1,29 @@
+db:
+  host: localhost
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: catalog-consumer
+  autoconfigure:
+    exclude: io.awspring.cloud.autoconfigure.s3.S3AutoConfiguration
+
+mongodb:
+  connection:
+    uri: mongodb://${db.host}:27017/
+    database: catalog
+
+aws:
+  region: AWS_REGION
+  s3:
+    bucket:
+      name: AWS_S3_BUCKET_NAME
+  sqs:
+    name: AWS_SQS_NAME
+  credentials:
+    key:
+      access: AWS_CREDENTIALS_KEY_ACCESS
+      secret: AWS_CREDENTIALS_KEY_SECRET
+
