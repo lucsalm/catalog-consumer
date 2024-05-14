@@ -1,15 +1,15 @@
 # Catalog Consumer
 
-This document is available in [English](https://github.com/lucsalm/catalog-consumer/blob/main/README.md), but it's also
-available in [Portuguese](https://github.com/lucsalm/catalog-consumer/blob/main/README-pt-BR.md).
+Este documento está disponível em [Inglês](README-en.md), 
+mas também está disponível em [Português](README-en).
 
-## Overview
-This project is an implementation of the [AnotaAi Backend Challenge](https://github.com/githubanotaai/new-test-backend-nodejs). Essentially, 
-the challenge involves creating an [API](https://github.com/lucsalm/catalog-api) capable of performing insertions and updates in an owner's 
-catalog of products on MongoDB. It sends any changes to a notification topic in AWS SNS, which is connected
-to an AWS SQS queue listened by another [application](https://github.com/lucsalm/catalog-consumer)  responsible for creating a JSON representation from the
-MongoDB data. This application then inserts and updates a file in an AWS S3 bucket for quick querying.
- 
+## Visão Geral
+Este projeto é uma implementação do [Desafio Backend AnotaAi](https://github.com/githubanotaai/new-test-backend-nodejs). Basicamente, o desafio envolve a criação de uma 
+[API](https://github.com/lucsalm/catalog-api) capaz de realizar inserções e atualizações no catálogo de produtos de um proprietário no MongoDB. 
+Ele envia quaisquer alterações para um tópico de notificação no AWS SNS, que está conectado a uma fila AWS SQS
+ouvida por outra [aplicação](https://github.com/lucsalm/catalog-consumer)  responsável por criar uma representação JSON dos dados do MongoDB.
+Essa aplicação então insere e atualiza um arquivo em um bucket do AWS S3 para consultas rápidas.
+
 ## Stack
 
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
@@ -19,17 +19,17 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
 ![AWS](https://img.shields.io/badge/Amazon%20AWS-232F3E.svg?style=for-the-badge&logo=Amazon-AWS&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED.svg?style=for-the-badge&logo=Docker&logoColor=white)
 
-## Architecture
+## Arquitetura
 
-![Architecture](https://raw.githubusercontent.com/lucsalm/catalog-consumer/main/img/arquitetura.png)
+![Arquitetura](img/arquitetura.png)
 
-## How to Use
+## Como Usar
 
-1. Configure services in your AWS account:
-    1. Create a topic on SNS.
-    2. Create a queue on SQS.
-        - Subscribe the queue to the topic already created.
-        - Give it the following permission:
+1. Configure os serviços em sua conta da AWS:
+    1. Crie um tópico no SNS.
+    2. Crie uma fila no SQS.
+        - Inscreva a fila no tópico já criado.
+        - Atribua a seguinte permissão:
            ```json 
             {
              "Sid": "{SID}",
@@ -44,9 +44,9 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
              }
             }
             ```
-    3. Create a bucket on S3.
-        - Able the public access.
-        - Give it the follow permission:
+    3. Crie um bucket no S3.
+        - Habilite o acesso público.
+        - Atribua a seguinte permissão:
             ```json
             {
              "Sid": "{SID}",
@@ -56,18 +56,18 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
              "Resource": "arn:aws:s3:::{BUCKET_NAME}/*.json"
             }
             ```
-    4. Create a user on IAM:
-        - Give it the following policies:
+    4. Crie um usuário no IAM:
+        - Atribua as seguintes políticas:
         ```yaml
         AmazonS3FullAccess
         AmazonSQSFullAccess
         AWSIoTDeviceDefenderPublishFindingsToSNSMitigationAction
        ```
-        - Create an Access Key Credentials.
-   
-2. Make sure Docker is installed in your machine.
-3. Clone this repository to your local environment.
-4. Set your AWS environments in `docker-compose.yaml` file:
+        - Crie credenciais de chave de acesso.
+
+2. Verifique se o Docker está instalado em sua máquina.
+3. Clone este repositório em seu ambiente local.
+4. Configure suas variáveis de ambiente da AWS no arquivo `docker-compose.yaml`:
    ```yaml
      AWS_REGION
      AWS_SNS_TOPIC_ARN
@@ -76,22 +76,22 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
      AWS_CREDENTIALS_KEY_ACCESS
      AWS_CREDENTIALS_KEY_SECRET
       ```
-5. In the terminal, execute the following command to build and start the Docker container:
-    - On Linux, run:
+5. No terminal, execute o seguinte comando para construir e iniciar o contêiner Docker:
+    - No Linux, execute:
         ```bash
         docker compose up
         ```
 
-    - On Windows, run:
+    - No Windows, execute:
         ```bash
         docker-compose up
         ```
 
-6. After the containers are built and the application is started,
-   access [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) to view its documentation. You should see the following
-   screen:![Swagger-api](https://raw.githubusercontent.com/lucsalm/catalog-consumer/main/img/swagger.png)
+6. Após os contêineres serem construídos e a aplicação ser iniciada,
+   acesse [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) para visualizar sua documentação. Você deverá ver a seguinte tela:
+   ![Swagger-api](img/swagger.png)
 
-**Notes:**
+**Observações:**
 
-- Ensure that ports `8080` and `8081` are not being used by another application on your system to avoid
-  conflicts. If necessary, you can modify the port mapping in the `docker-compose.yml` file.
+- Certifique-se de que as portas `8080` e `8081` não estão sendo usadas por outra aplicação em seu sistema para evitar
+  conflitos. Se necessário, você pode modificar o mapeamento de porta no arquivo `docker-compose.yml`.
