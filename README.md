@@ -1,13 +1,13 @@
 # Catalog Consumer
 
-Este documento está disponível em [Inglês](README-en.md), 
+Este documento está disponível em [Inglês](README-en.md),
 mas também está disponível em [Português](README-en).
 
 ## Visão Geral
 Este projeto é uma implementação do [Desafio Backend AnotaAi](https://github.com/githubanotaai/new-test-backend-nodejs). Basicamente, o desafio envolve a criação de uma 
 [API](https://github.com/lucsalm/catalog-api) capaz de realizar inserções e atualizações no catálogo de produtos de um proprietário no MongoDB. 
 Ele envia quaisquer alterações para um tópico de notificação no AWS SNS, que está conectado a uma fila AWS SQS
-ouvida por outra [aplicação](https://github.com/lucsalm/catalog-consumer)  responsável por criar uma representação JSON dos dados do MongoDB.
+ouvida por um [Listener](https://github.com/lucsalm/catalog-consumer)  responsável por criar uma representação JSON dos dados do MongoDB.
 Essa aplicação então insere e atualiza um arquivo em um bucket do AWS S3 para consultas rápidas.
 
 ## Stack
@@ -67,7 +67,7 @@ Essa aplicação então insere e atualiza um arquivo em um bucket do AWS S3 para
 
 2. Verifique se o Docker está instalado em sua máquina.
 3. Clone este repositório em seu ambiente local.
-4. Configure suas variáveis de ambiente da AWS no arquivo `docker-compose.yaml`:
+4. Configure suas variáveis de ambiente da AWS no arquivo [docker-compose.yaml](docker-compose.yaml):
    ```yaml
      AWS_REGION
      AWS_SNS_TOPIC_ARN
@@ -87,11 +87,11 @@ Essa aplicação então insere e atualiza um arquivo em um bucket do AWS S3 para
         docker-compose up
         ```
 
-6. Após os contêineres serem construídos e a aplicação ser iniciada,
-   acesse [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) para visualizar sua documentação. Você deverá ver a seguinte tela:
-   ![Swagger-api](img/swagger.png)
+6. Após os contêineres serem construídos e a aplicação será iniciada,
+   acesse [Swagger](http://localhost:8080/swagger-ui/index.html) para visualizar sua documentação. Você deverá ver a seguinte tela:
+   screen:![Swagger-api](img/swagger.png)
 
 **Observações:**
 
 - Certifique-se de que as portas `8080` e `8081` não estão sendo usadas por outra aplicação em seu sistema para evitar
-  conflitos. Se necessário, você pode modificar o mapeamento de porta no arquivo `docker-compose.yml`.
+  conflitos. Se necessário, você pode modificar o mapeamento de porta no arquivo [docker-compose.yaml](docker-compose.yaml).

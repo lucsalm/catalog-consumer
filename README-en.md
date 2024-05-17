@@ -1,7 +1,7 @@
 # Catalog Consumer
 
-This document is available in [English](README-en.md), but it's also
-available in [Portuguese](README-en).
+This document is available in [English](README-en.md), but it is also available in [Portuguese](README.md).
+
 
 ## Overview
 This project is an implementation of the [AnotaAi Backend Challenge](https://github.com/githubanotaai/new-test-backend-nodejs). Essentially, 
@@ -67,7 +67,7 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
    
 2. Make sure Docker is installed in your machine.
 3. Clone this repository to your local environment.
-4. Set your AWS environments in `docker-compose.yaml` file:
+4. Set your AWS environments in [docker-compose.yaml](docker-compose.yaml) file:
    ```yaml
      AWS_REGION
      AWS_SNS_TOPIC_ARN
@@ -88,10 +88,10 @@ MongoDB data. This application then inserts and updates a file in an AWS S3 buck
         ```
 
 6. After the containers are built and the application is started,
-   access [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) to view its documentation. You should see the following
+   access [Swagger](http://localhost:8080/swagger-ui/index.html) to view its documentation. You should see the following
    screen:![Swagger-api](img/swagger.png)
 
 **Notes:**
 
 - Ensure that ports `8080` and `8081` are not being used by another application on your system to avoid
-  conflicts. If necessary, you can modify the port mapping in the `docker-compose.yml` file.
+  conflicts. If necessary, you can modify the port mapping in the [docker-compose.yaml](docker-compose.yaml) file.
