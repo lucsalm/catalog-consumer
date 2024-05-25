@@ -5,15 +5,15 @@ import com.lucsalmd.catalogconsumer.listener.SQSListener;
 import com.lucsalmd.catalogconsumer.model.SQSMessage;
 import com.lucsalmd.catalogconsumer.service.OwnerService;
 import io.awspring.cloud.sqs.annotation.SqsListener;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sqs.model.Message;
 
 @Service
+@RequiredArgsConstructor
 public class SQSListenerImpl implements SQSListener {
 
-    @Autowired
-    private OwnerService ownerService;
+    private final OwnerService ownerService;
 
     @SqsListener(value = "${aws.sqs.name}", acknowledgementMode = "ON_SUCCESS")
     public void receiveMessage(Message message) {

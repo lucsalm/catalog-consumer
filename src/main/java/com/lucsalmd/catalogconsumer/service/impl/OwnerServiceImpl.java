@@ -1,30 +1,28 @@
 package com.lucsalmd.catalogconsumer.service.impl;
 
 import com.google.gson.Gson;
+import com.lucsalmd.catalogconsumer.model.entity.Category;
 import com.lucsalmd.catalogconsumer.model.model.Catalog;
 import com.lucsalmd.catalogconsumer.model.model.Item;
 import com.lucsalmd.catalogconsumer.model.model.Owner;
-import com.lucsalmd.catalogconsumer.model.entity.Category;
-import com.lucsalmd.catalogconsumer.model.entity.Product;
 import com.lucsalmd.catalogconsumer.repository.CategoryRepository;
 import com.lucsalmd.catalogconsumer.repository.ProductRepository;
 import com.lucsalmd.catalogconsumer.service.OwnerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OwnerServiceImpl implements OwnerService {
 
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
-    @Autowired
-    private S3ServiceImpl s3Service;
+    private final ProductRepository productRepository;
+
+    private final CategoryRepository categoryRepository;
+
+    private final S3ServiceImpl s3Service;
 
     public void saveOwner(String ownerId) {
         final Owner owner = mountOwner(ownerId);
@@ -32,7 +30,7 @@ public class OwnerServiceImpl implements OwnerService {
         s3Service.putJsonToBucket(ownerId, ownerJson);
     }
 
-    private Owner mountOwner(String ownerId) {
+    private final Owner mountOwner(String ownerId) {
         final List<Category> categories = categoryRepository.findByOwnerId(ownerId);
 
         List<Catalog> catalog = categories.stream().map(category -> {

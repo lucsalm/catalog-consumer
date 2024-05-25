@@ -2,6 +2,7 @@ package com.lucsalmd.catalogconsumer.config;
 
 
 import io.awspring.cloud.sqs.config.SqsMessageListenerContainerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,15 +14,17 @@ import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
 
 @Configuration
+@RequiredArgsConstructor
 public class AWSConfig {
 
     @Value("${aws.region}")
     private String region;
+
     @Value("${aws.credentials.key.access}")
     private String accessKey;
+
     @Value("${aws.credentials.key.secret}")
     private String secretKey;
-
 
     private StaticCredentialsProvider getCredentials() {
         return StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey));
